@@ -7,13 +7,13 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "services:up": "docker compose up -d && docker compose logs -f",
+    "services:up": "bash -c 'trap \"docker-compose down\" EXIT && docker-compose up --build'",
     "services:stop": "docker compose stop",
     "services:down": "docker compose down",
     "services:enter": "docker exec -it webpack-container /bin/bash",
-    "services:recreate": "docker-compose down && docker-compose up --build -d",
-    "webpack:dev": "webpack --watch --mode development",
-    "webpack:prod": "webpack --watch --mode production"
+    "services:recreate": "services:down && services:up",
+    "webpack:dev": "webpack --mode development --watch",
+    "webpack:prod": "webpack --mode production --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
